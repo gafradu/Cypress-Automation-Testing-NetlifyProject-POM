@@ -1,5 +1,8 @@
 /// <reference types="cypress" />
 
+import FileUpload from "../../pages/FileUpload";
+import LeftSideMenuPage from "../../pages/LeftSideMenuPage";
+
 describe("File Upload Page Positive and Negative Scenarios", () => {
   
   beforeEach(() => {
@@ -9,9 +12,9 @@ describe("File Upload Page Positive and Negative Scenarios", () => {
   it("Upload File positive test", () => {
     const fileName = "New-England-Patriots-Fantasy-Football-Preview-1.png";
     
-    cy.get('a[href="file-upload.html"]').click();
-    cy.get("#file_upload").selectFile(`cypress/fixtures/${fileName}`);
-    cy.get("button").contains("Submit").click();
+    LeftSideMenuPage.getFileUpload().click();
+    FileUpload.getBrowseButton.selectFile(`cypress/fixtures/${fileName}`);
+    FileUpload.getSubmitButton.click();
     cy.get("#file_upload_response")
       .should("be.visible")
       .contains(`You have successfully uploaded "${fileName}"`);

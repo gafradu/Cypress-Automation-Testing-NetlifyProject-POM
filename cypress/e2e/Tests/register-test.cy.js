@@ -1,5 +1,7 @@
 /// <reference types="cypress" />
 import { faker } from "@faker-js/faker";
+import Register from "../../pages/Register";
+import LeftSideMenuPage from "../../pages/LeftSideMenuPage";
 
 describe("Register Page Positive and Negative Scenarios", () => {
   const randomFirstName = faker.person.firstName();
@@ -26,30 +28,30 @@ describe("Register Page Positive and Negative Scenarios", () => {
   });
 
   it("Register by typing only the required information positive test", () => {
-    cy.get("#forms").click();
-    cy.get('a[href="register.html"]').click();
-    cy.get('input[type="email"]').type(
+    LeftSideMenuPage.getForms().click();
+    LeftSideMenuPage.getRegister().click();
+    Register.getEmailAddress().type(
       faker.internet.email({
         firstName: randomFirstName,
         lastName: randomLastName,
       })
     );
-    cy.get('input[type="password"]').type(randomPassword);
-    cy.get(".form-check-input").click();
-    cy.get("#registerBtn").click();
+    Register.getPassword().type(randomPassword);
+    Register.getAgreeCheckbox().click();
+    Register.getRegisterButton().click();
     cy.get("#message")
       .should("be.visible")
       .contains(`The account has been successfully created!`);
   });
 
   it("Try to register w/o filling required information negative test", () => {
-    cy.get("#forms").click();
-    cy.get('a[href="register.html"]').click();
-    cy.get("#firstName").type(randomFirstName);
-    cy.get("#lastName").type(randomLastName);
-    cy.get("#phone").type(randomPhoneNumber);
-    cy.get("select").select(randomCountry);
-    cy.get("#registerBtn").click();
+    LeftSideMenuPage.getForms().click();
+    LeftSideMenuPage.getRegister().click();
+    Register.getFirstName().type(randomFirstName);
+    Register.getLastName().type(randomLastName);
+    Register.getPhoneNumber().type(randomPhoneNumber);
+    Register.getCountry().select(randomCountry);
+    Register.getRegisterButton().click();
     cy.get("#message")
       .should("be.visible")
       .contains(`Email Address is required`)
@@ -60,53 +62,53 @@ describe("Register Page Positive and Negative Scenarios", () => {
   });
 
   it("Try to register w/o filling Email negative test", () => {
-    cy.get("#forms").click();
-    cy.get('a[href="register.html"]').click();
-    cy.get("#firstName").type(randomFirstName);
-    cy.get("#lastName").type(randomLastName);
-    cy.get("#phone").type(randomPhoneNumber);
-    cy.get("select").select(randomCountry);
-    cy.get('input[type="password"]').type(randomPassword);
-    cy.get(".form-check-input").click();
-    cy.get("#registerBtn").click();
+    LeftSideMenuPage.getForms().click();
+    LeftSideMenuPage.getRegister().click();
+    Register.getFirstName().type(randomFirstName);
+    Register.getLastName().type(randomLastName);
+    Register.getPhoneNumber().type(randomPhoneNumber);
+    Register.getCountry().select(randomCountry);
+    Register.getPassword().type(randomPassword);
+    Register.getAgreeCheckbox().click();
+    Register.getRegisterButton().click();
     cy.get("#message")
       .should("be.visible")
       .contains(`Email Address is required`);
   });
 
   it("Try to register w/o filling Password negative test", () => {
-    cy.get("#forms").click();
-    cy.get('a[href="register.html"]').click();
-    cy.get("#firstName").type(randomFirstName);
-    cy.get("#lastName").type(randomLastName);
-    cy.get("#phone").type(randomPhoneNumber);
-    cy.get("select").select(randomCountry);
-    cy.get('input[type="email"]').type(
+    LeftSideMenuPage.getForms().click();
+    LeftSideMenuPage.getRegister().click();
+    Register.getFirstName().type(randomFirstName);
+    Register.getLastName().type(randomLastName);
+    Register.getPhoneNumber().type(randomPhoneNumber);
+    Register.getCountry().select(randomCountry);
+    Register.getEmailAddress().type(
       faker.internet.email({
         firstName: randomFirstName,
         lastName: randomLastName,
       })
     );
-    cy.get(".form-check-input").click();
-    cy.get("#registerBtn").click();
+    Register.getAgreeCheckbox().click();
+    Register.getRegisterButton().click();
     cy.get("#message").should("be.visible").contains("Password is required");
   });
 
   it("Try to Register by not agreeing with the terms negative test", () => {
-    cy.get("#forms").click();
-    cy.get('a[href="register.html"]').click();
-    cy.get("#firstName").type(randomFirstName);
-    cy.get("#lastName").type(randomLastName);
-    cy.get("#phone").type(randomPhoneNumber);
-    cy.get("select").select(randomCountry);
-    cy.get('input[type="email"]').type(
+    LeftSideMenuPage.getForms().click();
+    LeftSideMenuPage.getRegister().click();
+    Register.getFirstName().type(randomFirstName);
+    Register.getLastName().type(randomLastName);
+    Register.getPhoneNumber().type(randomPhoneNumber);
+    Register.getCountry().select(randomCountry);
+    Register.getEmailAddress().type(
       faker.internet.email({
         firstName: randomFirstName,
         lastName: randomLastName,
       })
     );
-    cy.get('input[type="password"]').type(randomPassword);
-    cy.get("#registerBtn").click();
+    Register.getPassword().type(randomPassword);
+    Register.getRegisterButton().click();
     cy.get("#message")
       .should("be.visible")
       .contains(

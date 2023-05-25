@@ -1,38 +1,41 @@
 import { faker } from "@faker-js/faker";
+import LeftSideMenuPage from "../pages/LeftSideMenuPage";
+import Login from "../pages/Login";
+import Register from "../pages/Register";
+import RecoverPassword from "../pages/RecoverPassword";
 
 Cypress.Commands.add("login", (email, password) => {
-  cy.get("#forms").click();
-  cy.get('a[href="login.html"]').click();
-  cy.get("#email").type(email);
-  cy.get("#password").type(password);
-  cy.get("#submitLoginBtn").click();
+  LeftSideMenuPage.getForms().click();
+  LeftSideMenuPage.getLogin().click();
+  Login.getEmailAddress().type(email);
+  Login.getPassword().type(password);
+  Login.getSubmitButton().click();
 });
 
 Cypress.Commands.add(
   "register",
   (firstName, lastName, phoneNumber, country, password) => {
-    cy.get("#forms").click();
-    cy.get('a[href="register.html"]').click();
-    cy.get("#firstName").type(firstName);
-    cy.get("#lastName").type(lastName);
-    cy.get("#phone").type(phoneNumber);
-    cy.get("select").select(country);
-    cy.get('input[type="email"]').type(
+    LeftSideMenuPage.getForms().click();
+    LeftSideMenuPage.getRegister().click();
+    Register.getFirstName().type(firstName);
+    Register.getFirstName().type(lastName);
+    Register.getPhoneNumber().type(phoneNumber);
+    Register.getCountry().select(country);
+    Register.getEmailAddress().type(
       faker.internet.email({
         firstName: firstName,
         lastName: lastName,
       })
     );
-    cy.get('input[type="password"]').type(password);
-    cy.get(".form-check-input").click();
-    cy.get("#registerBtn").click();
+    Register.getPassword().type(password);
+    Register.getAgreeCheckbox().click();
+    Register.getRegisterButton().click();
   }
 );
 
 Cypress.Commands.add("recoverPassword", (email) => {
-    cy.get("#forms").click();
-    cy.get('a[href="recover-password.html"]').click();
-    cy.get("#email").type(email);
-    cy.get("button[id='recover-password']").click();
-  });
-  
+  LeftSideMenuPage.getForms().click();
+  LeftSideMenuPage.getRecoverPassword().click();
+  RecoverPassword.getEmailAddress().type(email);
+  RecoverPassword.getRecoverPasswordButton().click();
+});

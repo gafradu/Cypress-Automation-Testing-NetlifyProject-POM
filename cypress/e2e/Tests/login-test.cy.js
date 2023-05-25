@@ -1,5 +1,8 @@
 /// <reference types="cypress" />
 
+import LeftSideMenuPage from "../../pages/LeftSideMenuPage";
+import Login from "../../pages/Login";
+
 describe("Login Page Positive and Negative Scenarios", () => {
   const correctEmail = "admin@admin.com";
   const correctPassword = "admin123";
@@ -11,9 +14,9 @@ describe("Login Page Positive and Negative Scenarios", () => {
   });
 
   it("Try to Login w/o credentials negative test", () => {
-    cy.get("#forms").click();
-    cy.get('a[href="login.html"]').click();
-    cy.get("#submitLoginBtn").click();
+    LeftSideMenuPage.getForms().click();
+    LeftSideMenuPage.Login().click();
+    Login.getSubmitButton().click();
     cy.get("#message")
       .should("be.visible")
       .contains(
@@ -22,10 +25,10 @@ describe("Login Page Positive and Negative Scenarios", () => {
   });
 
   it("Try to Login with w/o Email negative test", () => {
-    cy.get("#forms").click();
-    cy.get('a[href="login.html"]').click();
-    cy.get("#password").type(correctPassword);
-    cy.get("#submitLoginBtn").click();
+    LeftSideMenuPage.getForms().click();
+    LeftSideMenuPage.Login().click();
+    Login.getPassword().type(correctPassword);
+    Login.getSubmitButton().click();
     cy.get("#message")
       .should("be.visible")
       .contains(
@@ -34,10 +37,10 @@ describe("Login Page Positive and Negative Scenarios", () => {
   });
 
   it("Try to Login w/o Password negative test", () => {
-    cy.get("#forms").click();
-    cy.get('a[href="login.html"]').click();
-    cy.get("#email").type(correctEmail);
-    cy.get("#submitLoginBtn").click();
+    LeftSideMenuPage.getForms().click();
+    LeftSideMenuPage.Login().click();
+    Login.getEmailAddress().type(correctEmail);
+    Login.getSubmitButton().click();
     cy.get("#message")
       .should("be.visible")
       .contains(
